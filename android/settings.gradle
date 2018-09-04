@@ -1,0 +1,3 @@
+rootProject.name = 'MixClubApp'
+
+include ':app'
