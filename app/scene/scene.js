@@ -4,33 +4,35 @@
 import React, {Component} from 'react'
 import {StyleSheet, AsyncStorage, Image, BackHandler, ToastAndroid, View} from 'react-native'
 import {connect} from 'react-redux'
-import {Actions, Scene, Modal, Router, Stack, Lightbox} from 'react-native-router-flux'
-import {LocalImages} from '../asset'
+import {Actions, Scene, Modal, Router, Stack, Drawer} from 'react-native-router-flux'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Theme from '../../theme'
 import WalletHeaderLeft from '../component/WalletHeaderLeft'
+import WalletHeaderRight from '../component/WalletHeaderRight'
 import Mine from '../router/mine'
 import Discovery from '../router/discovery'
 import Wallets, {ImportEosWallet} from '../router/wallet'
 import Login from '../router/login'
+import WalletChangeDrawer from '../component/WalletChangeDrawer'
 
 const TabbarIcon = ({ title, focused }) => {
-  let image;
+  let tabbarIcon;
   
   switch (title) {
     case '钱包':
-      image = focused ? LocalImages.navbar.wallet_selected : LocalImages.navbar.wallet_unselected;
+      tabbarIcon = focused ? <Icon name="wallet" color={Theme.brand_primary} size={24}/> : <Icon name="wallet" color='#888' size={24}/>
       break;
   
     case '发现':
-      image = focused ? LocalImages.navbar.discover_selected : LocalImages.navbar.discover_unselected;
+      tabbarIcon = focused ? <Icon name="view-dashboard" color={Theme.brand_primary} size={24}/> : <Icon name="view-dashboard" color='#888' size={24}/>
       break;
     
     case '我的':
-      image = focused ? LocalImages.navbar.mine_selected : LocalImages.navbar.mine_unselected;
+      tabbarIcon = focused ? <Icon name="account-box" color={Theme.brand_primary} size={24}/> : <Icon name="account-box" color='#888' size={24}/>
       break;
   }
   
-  return ( <Image style={styles.iconStyle} source={image} /> );
+  return tabbarIcon;
 }
 
 class Scenes extends Component {
@@ -65,11 +67,18 @@ class Scenes extends Component {
       <Router backAndroidHandler={this.onBackAndroid} sceneStyle={styles.sceneStyle}>
         <Stack key="root" hideNavBar>
           <Modal>
-            <Scene key="HOME" tabs tabBarPosition="bottom" hideNavBar activeTintColor={Theme.brand_primary}>
-              <Scene key="WALLET" title="钱包" icon={TabbarIcon} component={Wallets} initial={true}
-                     headerMode="float" navigationBarStyle={styles.navigationBarStyle} titleStyle={styles.titleStyle}
-                     renderTitle={<View/>} renderLeftButton={<WalletHeaderLeft walletName="WalletName"/>}
-              />
+            <Scene key="HOME" tabs tabBarPosition="bottom" hideNavBar
+                   activeTintColor={Theme.brand_primary}
+                   tabBarStyle={styles.tabbarStyle}
+            >
+              <Drawer key="WALLET_CHANGE_DRAWER" title="钱包" icon={TabbarIcon} drawerPosition="right" hideNavBar contentComponent={WalletChangeDrawer}>
+                <Scene key="WALLET" component={Wallets} initial={true}
+                       headerMode="float" navigationBarStyle={styles.navigationBarStyle} titleStyle={styles.titleStyle}
+                       renderTitle={<View/>}
+                       renderLeftButton={WalletHeaderLeft({walletName:"WalletName"})}
+                       renderRightButton={WalletHeaderRight}
+                />
+              </Drawer>
               <Scene key="DISCOVERY" title="发现" icon={TabbarIcon} hideNavBar component={Discovery}/>
               <Scene key="MINE" title="我的" icon={TabbarIcon} component={Mine}
                      headerMode="float" navigationBarStyle={styles.navigationBarStyle} titleStyle={styles.titleStyle}
@@ -91,7 +100,7 @@ const styles = StyleSheet.create({
   },
   sceneStyle: {
     flex: 1,
-    backgroundColor: '#F5F5F9',
+    backgroundColor: Theme.fill_body,
     shadowColor: null,
     shadowOffset: null,
     shadowOpacity: null,
@@ -103,7 +112,11 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     color: '#fff',
-  }
+  },
+  tabbarStyle: {
+    backgroundColor: Theme.tab_bar_fill,
+    borderTopColor: Theme.border_color_base,
+  },
 })
 
 const mapStateToProps = (state, ownProps) => {
