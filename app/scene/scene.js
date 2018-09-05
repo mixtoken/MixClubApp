@@ -2,10 +2,12 @@
  * Created by yangyang on 2018/8/27.
  */
 import React, {Component} from 'react'
-import {StyleSheet, AsyncStorage, Image, BackHandler, ToastAndroid} from 'react-native'
+import {StyleSheet, AsyncStorage, Image, BackHandler, ToastAndroid, View} from 'react-native'
 import {connect} from 'react-redux'
 import {Actions, Scene, Modal, Router, Stack, Lightbox} from 'react-native-router-flux'
 import {LocalImages} from '../asset'
+import Theme from '../../theme'
+import WalletHeaderLeft from '../component/WalletHeaderLeft'
 import Mine from '../router/mine'
 import Discovery from '../router/discovery'
 import Wallets, {ImportEosWallet} from '../router/wallet'
@@ -63,10 +65,15 @@ class Scenes extends Component {
       <Router backAndroidHandler={this.onBackAndroid} sceneStyle={styles.sceneStyle}>
         <Stack key="root" hideNavBar>
           <Modal>
-            <Scene key="HOME" tabs tabBarPosition="bottom" hideNavBar headerMode="none" activeTintColor="#1296DB">
-              <Scene key="WALLET" title="钱包" icon={TabbarIcon} component={Wallets} initial={true}/>
-              <Scene key="DISCOVERY" title="发现" icon={TabbarIcon} component={Discovery}/>
-              <Scene key="MINE" title="我的" icon={TabbarIcon} component={Mine}/>
+            <Scene key="HOME" tabs tabBarPosition="bottom" hideNavBar activeTintColor={Theme.brand_primary}>
+              <Scene key="WALLET" title="钱包" icon={TabbarIcon} component={Wallets} initial={true}
+                     headerMode="float" navigationBarStyle={styles.navigationBarStyle} titleStyle={styles.titleStyle}
+                     renderTitle={<View/>} renderLeftButton={<WalletHeaderLeft walletName="WalletName"/>}
+              />
+              <Scene key="DISCOVERY" title="发现" icon={TabbarIcon} hideNavBar component={Discovery}/>
+              <Scene key="MINE" title="我的" icon={TabbarIcon} component={Mine}
+                     headerMode="float" navigationBarStyle={styles.navigationBarStyle} titleStyle={styles.titleStyle}
+              />
             </Scene>
             <Scene key="LOGIN" title="登陆" component={Login} />
           </Modal>
@@ -90,6 +97,13 @@ const styles = StyleSheet.create({
     shadowOpacity: null,
     shadowRadius: null,
   },
+  navigationBarStyle: {
+    backgroundColor: Theme.brand_primary,
+    borderBottomWidth: 0,
+  },
+  titleStyle: {
+    color: '#fff',
+  }
 })
 
 const mapStateToProps = (state, ownProps) => {

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView
 } from 'react-native';
 import { Button, WingBlank } from 'antd-mobile-rn';
 import {Actions} from 'react-native-router-flux'
@@ -18,14 +19,17 @@ class Wallets extends PureComponent {
   
   render() {
     return (
-      <View>
+      <ScrollView>
         <View>
           <Text>Wallets</Text>
         </View>
         <WingBlank>
           <Button type="primary" onClick={() => Actions.IMPORT_EOS_WALLET()}>导入EOS钱包</Button>
         </WingBlank>
-      </View>
+        <View style={{height: 1223}}>
+          <Text>end</Text>
+        </View>
+      </ScrollView>
     )
   }
 }

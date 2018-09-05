@@ -3,7 +3,7 @@
  */
 export default {
   common: {
-    
+    logo: require('./png/mix-logo.png'),
   },
   navbar: {
     mine_selected: require('./png/mine_selected.png'),
