@@ -8,7 +8,6 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Dimensions
 } from 'react-native';
 import {
   Button,
@@ -20,7 +19,6 @@ import {connect} from 'react-redux'
 import Theme from '../../../theme'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const PAGE_WIDTH = Dimensions.get('window').width
 
 class Wallets extends PureComponent {
   constructor(props) {
@@ -41,7 +39,7 @@ class Wallets extends PureComponent {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {}}>
           <Flex direction="column">
-            <Icon name="transfer" color="white" size={48}/>
+            <Icon name="account-switch" color="white" size={48}/>
             <Text style={styles.toolBtnText}>转账</Text>
           </Flex>
         </TouchableOpacity>
@@ -64,7 +62,7 @@ class Wallets extends PureComponent {
   render() {
     return (
       <ScrollView style={{flex: 1}}>
-        <Flex direction="column" style={styles.topViewArea}>
+        <Flex direction="column" align="stretch" style={styles.topViewArea}>
           <Flex justify="center">
             <Text style={styles.topViewTitle}>¥ 总资产</Text>
             <TouchableOpacity onPress={() => {this.setState({see: !this.state.see})}}>
@@ -78,7 +76,7 @@ class Wallets extends PureComponent {
               <Text style={styles.amountText}>23983.32</Text>
             </Flex>
           </WingBlank>
-          <View style={{width: PAGE_WIDTH}}>
+          <View>
             {this.renderToolbar()}
           </View>
         </Flex>

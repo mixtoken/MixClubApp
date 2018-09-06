@@ -6,9 +6,16 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Dimensions,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux'
+import { Carousel, WingBlank } from 'antd-mobile-rn';
+
+const PAGE_WIDTH = Dimensions.get('window').width
 
 class Discovery extends PureComponent {
   constructor(props) {
@@ -17,7 +24,22 @@ class Discovery extends PureComponent {
   
   render() {
     return (
-      <View><Text>Discovery</Text></View>
+      <ScrollView>
+        <Carousel autoplay infinite>
+          <TouchableOpacity onPress={() => {}} style={{flex: 1}}>
+            <Image source={{uri: 'http://images.lvyii.com/111.jpeg'}} style={{width: PAGE_WIDTH, height: 250}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}} style={{flex: 1}}>
+            <Image source={{uri: 'http://images.lvyii.com/222.jpeg'}} style={{width: PAGE_WIDTH, height: 250}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}} style={{flex: 1}}>
+            <Image source={{uri: 'http://images.lvyii.com/333.jpeg'}} style={{width: PAGE_WIDTH, height: 250}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}} style={{flex: 1}}>
+            <Image source={{uri: 'http://images.lvyii.com/444.jpeg'}} style={{width: PAGE_WIDTH, height: 250}}/>
+          </TouchableOpacity>
+        </Carousel>
+      </ScrollView>
     )
   }
 }

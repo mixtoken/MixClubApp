@@ -4,6 +4,7 @@ import Router from './app/scene/scene'
 import {store, persistor} from './app/store/persistStore'
 import {Provider, connect} from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import Theme from './theme'
 
 const RouterWithRedux = connect()(Router)
 
@@ -14,8 +15,7 @@ export default class App extends Component {
   
   render() {
     if (Platform.OS == 'android') {
-      StatusBar.setTranslucent(true)
-      StatusBar.setBackgroundColor('transparent', true)
+      StatusBar.setBackgroundColor(Theme.brand_primary, true)
     }
     StatusBar.setBarStyle('light-content', true)
     return (

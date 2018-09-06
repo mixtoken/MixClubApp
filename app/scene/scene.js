@@ -20,15 +20,15 @@ const TabbarIcon = ({ title, focused }) => {
   
   switch (title) {
     case '钱包':
-      tabbarIcon = focused ? <Icon name="wallet" color={Theme.brand_primary} size={24}/> : <Icon name="wallet" color='#888' size={24}/>
+      tabbarIcon = focused ? <Icon name="wallet" color={Theme.brand_primary} size={28}/> : <Icon name="wallet" color='#888' size={28}/>
       break;
   
     case '发现':
-      tabbarIcon = focused ? <Icon name="view-dashboard" color={Theme.brand_primary} size={24}/> : <Icon name="view-dashboard" color='#888' size={24}/>
+      tabbarIcon = focused ? <Icon name="view-dashboard" color={Theme.brand_primary} size={28}/> : <Icon name="view-dashboard" color='#888' size={28}/>
       break;
     
     case '我的':
-      tabbarIcon = focused ? <Icon name="account-box" color={Theme.brand_primary} size={24}/> : <Icon name="account-box" color='#888' size={24}/>
+      tabbarIcon = focused ? <Icon name="account-box" color={Theme.brand_primary} size={28}/> : <Icon name="account-box" color='#888' size={28}/>
       break;
   }
   
@@ -67,23 +67,23 @@ class Scenes extends Component {
       <Router backAndroidHandler={this.onBackAndroid} sceneStyle={styles.sceneStyle}>
         <Stack key="root" hideNavBar>
           <Modal>
-            <Scene key="HOME" tabs tabBarPosition="bottom" hideNavBar
-                   activeTintColor={Theme.brand_primary}
-                   tabBarStyle={styles.tabbarStyle}
-            >
-              <Drawer key="WALLET_CHANGE_DRAWER" title="钱包" icon={TabbarIcon} drawerPosition="right" hideNavBar contentComponent={WalletChangeDrawer}>
-                <Scene key="WALLET" component={Wallets} initial={true}
+            <Drawer key="WALLET_CHANGE_DRAWER" drawerPosition="right" hideNavBar contentComponent={WalletChangeDrawer}>
+              <Scene key="HOME" tabs tabBarPosition="bottom" hideNavBar activeTintColor={Theme.brand_primary}
+                     tabBarStyle={styles.tabbarStyle} lazy={true}
+              >
+                <Scene key="WALLET" title="钱包" icon={TabbarIcon} component={Wallets} initial={true}
                        headerMode="float" navigationBarStyle={styles.navigationBarStyle} titleStyle={styles.titleStyle}
                        renderTitle={<View/>}
                        renderLeftButton={WalletHeaderLeft({walletName:"WalletName"})}
                        renderRightButton={WalletHeaderRight}
                 />
-              </Drawer>
-              <Scene key="DISCOVERY" title="发现" icon={TabbarIcon} hideNavBar component={Discovery}/>
-              <Scene key="MINE" title="我的" icon={TabbarIcon} component={Mine}
-                     headerMode="float" navigationBarStyle={styles.navigationBarStyle} titleStyle={styles.titleStyle}
-              />
-            </Scene>
+                <Scene key="DISCOVERY" title="发现" icon={TabbarIcon} hideNavBar component={Discovery}/>
+                <Scene key="MINE" title="我的" icon={TabbarIcon} component={Mine}
+                       headerMode="float" navigationBarStyle={styles.navigationBarStyle} titleStyle={styles.titleStyle}
+                       renderRightButton={<View/>}
+                />
+              </Scene>
+            </Drawer>
             <Scene key="LOGIN" title="登陆" component={Login} />
           </Modal>
           <Scene key="IMPORT_EOS_WALLET" title="导入EOS钱包" hideNavBar={false} component={ImportEosWallet}/>
